@@ -1,6 +1,6 @@
-# TikTok Clone for iOS - README
+# RitRok - A TikTok Clone for iOS
 
-Welcome to the TikTok Clone for iOS, a sample project demonstrating how to build a TikTok-like app using Swift and IMG.LY's CreativeEditor SDK (CE.SDK). This project guides you through setting up a video recording, editing, and playback app using the powerful tools provided by IMG.LY. With this project, you will be able to create a robust video-sharing application featuring similar functionalities to TikTok.
+Welcome to the TikTok Clone for iOS, a sample project demonstrating how to build a TikTok-like app using Swift and IMG.LY's CreativeEditor SDK (CE.SDK). This project guides you through setting up a video recording, editing, and playback app using the powerful tools provided by IMG.LY. With this project, you will be able to create a robust video-sharing application featuring similar functionalities to TikTok. Read the original [blog post](https://img.ly/blog/how-to-build-a-tiktok-clone-for-ios/) for an in-depth guide.
 
 Table of Contents
 -----------------
@@ -29,7 +29,8 @@ Table of Contents
 Introduction
 ------------
 
-This repository contains the source code for building a TikTok-like app using Swift and the IMG.LY CreativeEditor SDK. The app allows users to record videos, apply various edits such as filters, stickers, and audio, and then export the finished product. The CreativeEditor SDK simplifies the process of adding advanced video editing features to your app, allowing for rapid development of feature-rich applications.
+This repository contains the source code for building a TikTok-like app using Swift and the IMG.LY CreativeEditor SDK. The app allows users to record videos, apply various edits such as filters, stickers, and audio, and then export the finished product. The CreativeEditor SDK simplifies the process by adding a camera module and advanced video editing features to your app, allowing for rapid development of feature-rich applications.
+Consult the officical documentation on how to integrate the CE.SDK [Mobile Editor](https://img.ly/docs/cesdk/mobile-editor/quickstart) and [Mobile Camera](https://img.ly/docs/cesdk/mobile-camera/quickstart)
 
 Features
 --------
@@ -58,15 +59,13 @@ Requirements
 Installation
 ------------
 
-1.  bashCopy codegit clone https://github.com/yourusername/tiktok-clone-ios.gitcd tiktok-clone-ios
-    
-2.  Install the required dependencies using Swift Package Manager:
+1.  Install the required dependencies using Swift Package Manager:
     
     *   Open the project in Xcode.
         
     *   Navigate to File > Add Packages....
         
-    *   arduinoCopy codehttps://github.com/imgly/IMGLYUI-swift
+    *   Add the CreativeEditor SDK using the following URL `https://github.com/imgly/IMGLYUI-swift`
         
     *   Select the IMGLYUI package which includes all necessary submodules like IMGLYCamera, IMGLYVideoEditor, etc.
         
@@ -82,7 +81,14 @@ To start working on the TikTok clone:
 
 1.  **Project Setup**: After cloning the repository, open the project in Xcode and ensure that the IMG.LY CreativeEditor SDK is integrated as per the instructions above.
     
-2.  xmlCopy codeNSCameraUsageDescriptionLets you record videosNSMicrophoneUsageDescriptionLets you record audio with your videos
+2.  Permissions: Make sure you have added the appropriate entries in your Info.plist for camera and microphone usage:
+
+    ```xml
+      <key>NSCameraUsageDescription</key>
+      <string>Lets you record videos</string>
+      <key>NSMicrophoneUsageDescription</key>
+      <string>Lets you record audio with your videos</string>
+    ```
     
 3.  **Run the App**: Build and run the project on a physical device to test the video recording and editing features.
     
@@ -102,11 +108,19 @@ The TikTok clone involves the following key components:
 
 To initialize the Video Editor:
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   swiftCopy codelet engine = EngineSettings(license: "", userID: "")  let videoEditor = VideoEditor(engine: engine)   `
+```swift
+let engine = EngineSettings(license: "<your-license-key>", userID: "<your-user-id>")
+let videoEditor = VideoEditor(engine: engine)
+```
 
 To capture and edit a video:
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   swiftCopy codeVideoEditor(engine)    .imgly.onCreate({ engine in      try await engine.scene.create(fromVideo: Bundle.main.url(forResource: "sample_video", withExtension: "mov")!)    })   `
+```swift
+VideoEditor(engine)
+  .imgly.onCreate({ engine in
+    try await engine.scene.create(fromVideo: Bundle.main.url(forResource: "sample_video", withExtension: "mov")!)
+  })
+```
 
 Further Customization
 ---------------------
@@ -127,9 +141,9 @@ References
 
 *   [IMG.LY CreativeEditor SDK Documentation](https://img.ly/docs/cesdk/introduction/)
     
-*   IMG.LY VideoEditor SDK
+*   [IMG.LY VideoEditor SDK](https://img.ly/docs/vesdk/)
     
-*   IMG.LY Camera SDK
+*   [IMG.LY Camera SDK](https://img.ly/docs/cesdk/mobile-camera/)
     
 
 License
